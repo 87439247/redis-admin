@@ -17,14 +17,20 @@ import com.mauersu.exception.RedisInitException;
 public class RedisConfig {
 
 	private static Log log = LogFactory.getLog(RedisConfig.class);
-	
-	private final static String DEFAULT_REDIS_PROPERTIES_FILEPATH = RedisConfig.class.getClassLoader().getResource("/").getPath() + "/redis.properties";
+
+
+	private static String getDefaultRedisPropertiesFilepath(){
+		return RedisConfig.class.getClassLoader().getResource("/").getPath() + "/redis.properties";
+	}
+
+
+	//private final static String DEFAULT_REDIS_PROPERTIES_FILEPATH = RedisConfig.class.getClassLoader().getResource("/").getPath() + "/redis.properties";
 	
 	/*@Bean(name="redisProperties")*/
 	//not-in-use now
 	public Properties propertiesConfig() {
 		Properties prop = new Properties();
-		File file = new File(DEFAULT_REDIS_PROPERTIES_FILEPATH);
+		File file = new File(getDefaultRedisPropertiesFilepath());
 		InputStream is = null;
 		try {
 			if(!file.exists()) {
@@ -33,7 +39,7 @@ public class RedisConfig {
 			is = new FileInputStream(file);
 			prop.load(is);
 		} catch (IOException e) {
-			log.error("cannot load properties of file name: " + DEFAULT_REDIS_PROPERTIES_FILEPATH + " " +  e.toString());
+			log.error("cannot load properties of file name: " + getDefaultRedisPropertiesFilepath() + " " +  e.toString());
 			throw new RedisInitException(e);
 		} finally {
 			if(is!=null) {

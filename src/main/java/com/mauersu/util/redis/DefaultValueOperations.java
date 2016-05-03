@@ -268,4 +268,14 @@ class DefaultValueOperations<K, V> extends AbstractOperations<K, V> implements V
 			}
 		}, true);
 	}
+
+	@Override
+	public Boolean setBit(K key, long offset, boolean value) {
+		return null;
+	}
+
+	@Override
+	public Boolean getBit(K key, long offset) {
+		return null;
+	}
 }

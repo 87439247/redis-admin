@@ -22,6 +22,7 @@ import java.util.Set;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.RedisZSetCommands;
 import org.springframework.data.redis.connection.RedisZSetCommands.Tuple;
 import org.springframework.data.redis.core.ConvertingCursor;
 import org.springframework.data.redis.core.Cursor;
@@ -157,6 +158,36 @@ class DefaultZSetOperations<K, V> extends AbstractOperations<K, V> implements ZS
 		}, true);
 
 		return deserializeTupleValues(rawValues);
+	}
+
+	@Override
+	public Set<V> rangeByLex(K key, final RedisZSetCommands.Range range) {
+		final byte[] rawKey = rawKey(key);
+
+		Set<byte[]> rawValues = execute(new RedisCallback<Set<byte[]>>() {
+
+			public Set<byte[]> doInRedis(RedisConnection connection) {
+				connection.select(dbIndex);
+				return connection.zRangeByLex(rawKey, range);
+			}
+		}, true);
+
+		return deserializeValues(rawValues);
+	}
+
+	@Override
+	public Set<V> rangeByLex(K key,final RedisZSetCommands.Range range,final RedisZSetCommands.Limit limit) {
+		final byte[] rawKey = rawKey(key);
+
+		Set<byte[]> rawValues = execute(new RedisCallback<Set<byte[]>>() {
+
+			public Set<byte[]> doInRedis(RedisConnection connection) {
+				connection.select(dbIndex);
+				return connection.zRangeByLex(rawKey, range,limit);
+			}
+		}, true);
+
+		return deserializeValues(rawValues);
 	}
 
 	public Set<V> rangeByScore(K key, final double min, final double max) {
