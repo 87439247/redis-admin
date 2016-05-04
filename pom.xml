@@ -26,7 +26,6 @@
         <mysql.version>5.1.30</mysql.version>
         <druid.version>1.0.14</druid.version>
         <jackson.version>2.3.3</jackson.version>
-        <log4j.version>1.2.12</log4j.version>
         <junit.version>4.11</junit.version>
         <guava.version>16.0.1</guava.version>
         <jedis.version>2.8.1</jedis.version>
@@ -230,12 +229,6 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
-        <!-- log4j Support -->
-        <dependency>     
-		    <groupId>log4j</groupId>     
-		    <artifactId>log4j</artifactId>     
-		    <version>${log4j.version}</version>     
-		</dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -260,6 +253,35 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
 		</dependency>
+
+
+
+		<!-- slf4j start -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.12</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+			<version>1.7.12</version>
+		</dependency>
+		<!-- slf4j end -->
+
+
+		<!-- logback start -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>1.1.3</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.1.3</version>
+		</dependency>
+		<!-- logback end -->
     </dependencies>
 
 </project>

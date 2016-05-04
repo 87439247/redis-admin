@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Semaphore;
 
+import com.mauersu.util.redis.MyStringRedisTemplate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.data.redis.connection.RedisClusterConfiguration;
@@ -19,10 +20,7 @@ import org.springframework.data.redis.core.RedisConnectionUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.StringUtils;
 
-import com.mauersu.dao.RedisTemplateFactory;
 import com.mauersu.exception.ConcurrentException;
-import com.mauersu.exception.RedisInitException;
-import com.mauersu.util.redis.MyStringRedisTemplate;
 import com.mauersu.util.ztree.RedisZtreeUtil;
 import redis.clients.jedis.JedisShardInfo;
 
@@ -116,6 +114,7 @@ public abstract class RedisApplication implements Constant {
                 hostsList.add(_host);
             }
             RedisClusterConfiguration configuration = new RedisClusterConfiguration(hostsList);
+            configuration.setMaxRedirects(1024);
             connectionFactory = new JedisConnectionFactory(configuration);
             //集群
         } else {
